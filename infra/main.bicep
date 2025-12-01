@@ -21,6 +21,7 @@ param principalId string
 //   tags: union(tags, { 'azd-service-name': <service name in azure.yaml> })
 var tags = {
   'azd-env-name': environmentName
+  SecurityControl: 'Ignore'
 }
 
 var abbrs = loadJsonContent('./abbreviations.json')
@@ -38,6 +39,7 @@ module eventhub 'eventhub.bicep' = {
   params: {
     name: !empty(ehServiceName) ? ehServiceName : '${abbrs.eventHubNamespaces}${resourceToken}'
     location: location
+    tags: tags
   }
 }
 

@@ -3,6 +3,8 @@
 
 param location string = resourceGroup().location
 param name string
+param tags object = {}
+
 
 var abbrs = loadJsonContent('./abbreviations.json')
 var str_acc_name=  '${abbrs.storageStorageAccounts}${uniqueString(resourceGroup().id)}'
@@ -11,6 +13,7 @@ var str_acc_name=  '${abbrs.storageStorageAccounts}${uniqueString(resourceGroup(
 resource eventhub_resource 'Microsoft.EventHub/namespaces@2024-05-01-preview' = {
   name: name
   location: location
+  tags: tags
   sku: {
     name: 'Standard'
     tier: 'Standard'
@@ -39,6 +42,7 @@ resource eventhub_resource 'Microsoft.EventHub/namespaces@2024-05-01-preview' = 
 resource storageAccounts_resource 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: str_acc_name
   location: location
+  tags: tags
   sku: {
     name: 'Standard_LRS'
     tier: 'Standard'
